@@ -3,6 +3,7 @@ package com.example.community.controller;
 
 import com.example.community.service.AlphaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.*;
 
 @Controller
 @RequestMapping("/alpha")
@@ -86,4 +87,39 @@ public class AlphaController {
         modelAndView.setViewName("/demo/view");
         return modelAndView;
     }
+
+    @RequestMapping(path = "/school", method = RequestMethod.GET)
+    public String getSchool(Model model) {
+        model.addAttribute("name","llk");
+        model.addAttribute("age",80);
+        return "/demo/view";
+    }
+
+    //响应JSON数据（异步响应）
+    //JAVA 对象 -> JSON字符串 -> JS对象
+    @RequestMapping(path = "/emp", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> getEmp() {
+        Map<String, Object> emp = new HashMap<>();
+        emp.put("name","张三");
+        emp.put("age",23);
+        emp.put("salary",8000);
+        return emp;
+    }
+
+    @RequestMapping(path = "/emps", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getEmps() {
+        List<Map<String, Object>> emps = new ArrayList<>();
+
+        Map<String, Object> emp = new HashMap<>();
+        emp.put("name","张三");
+        emp.put("age",23);
+        emp.put("salary",8000);
+        emps.add(emp);
+
+        return emps;
+    }
+
+
 }
